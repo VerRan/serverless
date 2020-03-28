@@ -1,0 +1,53 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'hello-wolrd
+
+  Sample SAM Template for hello-wolrd
+
+  '
+Globals:
+  Function:
+    Timeout: 3
+Resources:
+  HelloWorldFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://serverless-lht/8f238cc71a5fd3ce8ab5c4eafdfadd3b
+      Handler: app.lambda_handler
+      Runtime: python3.6
+      Events:
+        HelloWorld:
+          Type: Api
+          Properties:
+            Path: /hello
+            Method: get
+Outputs:
+  HelloWorldApi:
+    Description: API Gateway endpoint URL for Prod stage for Hello World function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/
+  HelloWorldFunction:
+    Description: Hello World Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - HelloWorldFunction
+      - Arn
+  HelloWorldFunctionIamRole:
+    Description: Implicit IAM Role created for Hello World function
+    Value:
+      Fn::GetAtt:
+      - HelloWorldFunctionRole
+      - Arn
+Metadata:
+  AWS::ServerlessRepo::Application:
+    Name: my-app
+    Description: hello world
+    Author: user1
+    SpdxLicenseId: Apache-2.0
+    LicenseUrl: s3://serverless-lht/d41d8cd98f00b204e9800998ecf8427e
+    ReadmeUrl: s3://serverless-lht/16421bc0644427973f255c7c836ee605
+    Labels:
+    - tests
+    HomePageUrl: https://github.com/VerRan/sar
+    SemanticVersion: 0.0.1
+    SourceCodeUrl: https://github.com/VerRan/sar
